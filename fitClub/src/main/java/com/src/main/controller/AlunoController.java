@@ -49,6 +49,7 @@ public class AlunoController {
 		return "pesquisarAluno";
 	}
 	
+
 	@GetMapping("/pesquisarUmAluno")
 	public String singleSearchForm(Model model) {
 		return "pesquisarUmAluno";
@@ -61,6 +62,13 @@ public class AlunoController {
 		return "pesquisarAluno";
 	}
 	
+
+	@GetMapping("/alunosMatriculados")
+	public String showAlunosMatriculados(Model model) {
+		model.addAttribute("alunos", alunoRepository.findAll());
+		return "alunosMatriculados";
+	}
+
 
 	@GetMapping("/editarAluno/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
