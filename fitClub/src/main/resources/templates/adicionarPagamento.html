@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head th:replace="modelo :: header"></head>
+	<body>
+		<!-- Page Wrapper -->
+  		<div id="wrapper">
+		<div th:replace="modelo :: sidebar"></div>
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+		
+		
+		  <!-- Main Content -->
+		  <div id="content">
+				<div class="container-fluid justify-content-center">
+					<!-- Topbar -->
+        			<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"><h1 class="h4 mb-2 text-gray-800">Adicionar Pagamento</h1></nav>
+					
+					<form action="#" th:action="@{/adicionarPagamento/{idAluno}(idAluno=${pagamento.idAluno})}" th:object="${pagamento}" method="post">
+						<div class="form-group row">
+			            	<div class="col-sm-6">
+								<div>
+									<input type="radio" name="tipoPagamento" value="mensal" th:field="*{tipoPagamento}" id="tipoPagamento" checked="checked" />Mensal
+								</div>
+								<div>
+									<input type="radio" name="tipoPagamento" value="anual" th:field="*{tipoPagamento}" id="tipoPagamento" />Anual
+								</div>
+							</div>
+							
+							<div class="form-group row">
+				            	<div class="col-sm-6">
+									<input type="number" th:field="*{valor}" id="valor" placeholder="R$ " class="form-control form-control-user">
+									<span th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></span>
+					            </div>
+				            </div>
+			            </div>
+			            <div class="form-group row">
+						<input type="reset" value="Limpar" class="btn btn-primary" id="reset" name="reset" />			            
+			            <div class="col-sm-1"></div>
+			            <input type="submit" value="Gravar" class="btn btn-primary"> 
+			            </div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<span th:if="${message}" th:text="${message}"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+		  </div>
+		  <!-- End of Main Content -->
+
+		
+		  <footer th:replace="modelo :: footer"></footer>
+		</div>
+		<!-- End of Content Wrapper -->
+		</div>
+ 		<!-- End of Page Wrapper -->
+	</body>
+</html>
+
