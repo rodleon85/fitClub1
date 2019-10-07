@@ -14,6 +14,12 @@
 				<div class="container-fluid justify-content-center">
 					<!-- Topbar -->
         			<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"><h1 class="h4 mb-2 text-gray-800">Adicionar Pagamento</h1></nav>
+        			
+        			<div class="form-group row">
+			            	<div class="col-sm-6" th:text="${aluno.name}">
+				            </div>
+			            </div>
+			            
 					
 					<form action="#" th:action="@{/adicionarPagamento/{idAluno}(idAluno=${pagamento.idAluno})}" th:object="${pagamento}" method="post">
 						<div class="form-group row">
