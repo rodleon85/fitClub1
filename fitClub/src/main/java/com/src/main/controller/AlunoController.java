@@ -46,6 +46,12 @@ public class AlunoController {
 		model.addAttribute("alunos", alunoRepository.findAll());
 		return "pesquisarAluno";
 	}
+	
+	@GetMapping("/alunosMatriculados")
+	public String showAlunosMatriculados(Model model) {
+		model.addAttribute("alunos", alunoRepository.findAll());
+		return "alunosMatriculados";
+	}
 
 	@GetMapping("/editarAluno/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
