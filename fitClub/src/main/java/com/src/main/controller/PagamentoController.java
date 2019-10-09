@@ -2,7 +2,6 @@ package com.src.main.controller;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -32,7 +31,12 @@ public class PagamentoController {
 	
 	
 	@GetMapping("/adicionarPagamento/{idAluno}")
-	public String showSignUpForm(Pagamento pagamento) {
+	public String showSignUpForm(@PathVariable("idAluno") long idAluno, Pagamento pagamento, Model model) {
+		Aluno aluno = alunoRepository.findById(idAluno)
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
+
+		model.addAttribute("aluno", aluno);
+		
 		return "adicionarPagamento";
 	}
 
@@ -71,11 +75,10 @@ public class PagamentoController {
 		return "adicionarPagamento";
 	}
 	
-	@GetMapping("/verificarInadimplencia")
-	public String showSearchForm(Model model) {
-		model.addAttribute("pagamentos", pagamentoRepository.findAll());
-		
-		return "verificarInadimplencia";
+	@GetMapping("/alunosInadimplentes")
+	public String showAlunosInadimplentes(Model model) {
+		model.addAttribute("alunos", alunoRepository.findListaInadimplentes());
+		return "alunosInadimplentes";
 	}
 	
 }

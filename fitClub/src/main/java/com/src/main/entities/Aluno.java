@@ -33,10 +33,13 @@ public class Aluno {
     @NotBlank(message = "O E-mail é obrigatório.")
     private String email;
     
+    private String plano;
     
     private Date dataMatricula;
     
-    private Date dataProximoPagamento;
+	private Date dataProximoPagamento;
+	
+	private String status;
     
     
 
@@ -118,6 +121,28 @@ public class Aluno {
 	 */
 	public void setDataProximoPagamento(Date dataProximoPagamento) {
 		this.dataProximoPagamento = dataProximoPagamento;
+	}
+	
+	public String getPlano() {
+		return plano;
+	}
+
+	public void setPlano(String plano) {
+		this.plano = plano;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 

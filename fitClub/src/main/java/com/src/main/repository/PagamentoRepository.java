@@ -8,5 +8,5 @@ import com.src.main.entities.Pagamento;
 // CRUD refers Create, Read, Update, Delete
 
 public interface PagamentoRepository extends CrudRepository<Pagamento, Long> {
-
+	
 }
