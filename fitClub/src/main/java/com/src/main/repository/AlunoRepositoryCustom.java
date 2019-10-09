@@ -6,5 +6,4 @@ import com.src.main.entities.Aluno;
 
 public interface AlunoRepositoryCustom {
     List<Aluno> findAlunoByNameContains(String name);
-
 }

@@ -11,9 +11,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.src.main.entities.Aluno;
 import com.src.main.repository.AlunoRepositoryCustom;
 
@@ -21,14 +18,7 @@ public class AlunoRepositoryCustomImpl implements AlunoRepositoryCustom {
  
     @PersistenceContext
     private EntityManager entityManager;
-    
-    @Autowired
-	JdbcTemplate jdbcTemplate;
  
-//    private static final String QUERY_LISTA_INADIMPLENTES = "select id,name,cpf,telefone,rg,endereco,email,plano,data_matricula,data_proximo_pagamento,'INADIMPLENTE' as 'status' "
-//    		+ "from aluno "
-//    		+ "where data_proximo_pagamento < CURDATE()";
-    
     @Override
     public List<Aluno> findAlunoByNameContains(String nome) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
