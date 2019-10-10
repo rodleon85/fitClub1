@@ -45,13 +45,9 @@ public class PagamentoController {
 		pagamento.setDataPagamento(new Date());
 		pagamento.setIdAluno(idAluno);
 		
-		if (result.hasErrors()) {
-			return "adicionarPagamento";
-		}
-		
 		Aluno aluno = alunoRepository.findById(idAluno)
 				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
-		
+		model.addAttribute("aluno", aluno);
 		if(pagamento.getTipoPagamento() == "mensal") {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(pagamento.getDataPagamento());
@@ -65,6 +61,10 @@ public class PagamentoController {
 			calendar.add(Calendar.MONTH, 12);
 			Date novaDataProximoPagamento = calendar.getTime();
 			aluno.setDataProximoPagamento(novaDataProximoPagamento);
+		}
+		
+		if (result.hasErrors()) {
+			return "adicionarPagamento";
 		}
 		
 		pagamentoRepository.save(pagamento);
