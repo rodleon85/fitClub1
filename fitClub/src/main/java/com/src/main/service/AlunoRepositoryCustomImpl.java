@@ -34,5 +34,22 @@ public class AlunoRepositoryCustomImpl implements AlunoRepositoryCustom {
         return entityManager.createQuery(query)
             .getResultList();
     }
+    
+    
+    @Override
+    public Aluno findAlunoByCpf(String cpf) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Aluno> query = cb.createQuery(Aluno.class);
+        Root<Aluno> aluno = query.from(Aluno.class);
+ 
+        Path<String> namePath = aluno.get("cpf");
+ 
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.like(namePath, cpf));
+        query.select(aluno).where(cb.or(predicates.toArray(new Predicate[predicates.size()])));
+ 
+        return entityManager.createQuery(query)
+            .getResultList().get(0);
+    }
 
 }

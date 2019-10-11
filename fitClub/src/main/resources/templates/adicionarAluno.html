@@ -19,13 +19,13 @@
 						<div class="form-group row">
 			            	<div class="col-sm-6">
 								<input type="text" th:field="*{name}" id="name" placeholder="Nome Completo" class="form-control form-control-user">
-								<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+								<span class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
 			            	<div class="col-sm-6">
 								<input type="text" th:field="*{cpf}" id="cpf" placeholder="CPF" class="form-control form-control-user">
-								<span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+								<span class="alert-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
@@ -37,19 +37,19 @@
 				        <div class="form-group row">
 			            	<div class="col-sm-6">
 								<input type="text" th:field="*{rg}" id="rg" placeholder="RG" class="form-control form-control-user">
-								<span th:if="${#fields.hasErrors('rg')}" th:errors="*{rg}"></span>
+								<span class="alert-danger" th:if="${#fields.hasErrors('rg')}" th:errors="*{rg}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
 			            	<div class="col-sm-6">
 								<input type="text" th:field="*{endereco}" id="endereco" placeholder="Endere&ccedil;o" class="form-control form-control-user">
-								<span th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span>
+								<span class="alert-danger" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
 			            	<div class="col-sm-6">
 								<input type="text" th:field="*{email}" id="email" placeholder="E-mail" class="form-control form-control-user">
-								<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+								<span class="alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
@@ -57,26 +57,22 @@
 								<div>
 									Plano <input type="radio" name="plano" value="mensal" th:field="*{plano}" id="plano" checked="checked" /> Mensal
 									<input type="radio" name="plano" value="anual" th:field="*{plano}" id="plano" /> Anual
+									<span class="alert-danger" th:if="${#fields.hasErrors('plano')}" th:errors="*{plano}"></span>
 								</div>
 							</div>
 			            </div>
 			            <div class="form-group row">
 						<input type="reset" value="Limpar" class="btn btn-primary" id="reset" name="reset" />			            
 			            <div class="col-sm-1"></div>
-			            <input type="submit" value="Gravar" class="btn btn-primary"> 
-			            </div>
-			            <div class="form-group row">
-			            	<div class="col-sm-6">
-								<span th:if="${message}" th:text="${message}"></span>
-				            </div>
+			            <input type="submit" value="Cadastrar" class="btn btn-primary"> 
 			            </div>
 					</form>
 				</div>
 		  </div>
 		  <!-- End of Main Content -->
 
-		
-		  <footer th:replace="modelo :: footer"></footer>
+			<notes th:replace="modelo :: notes"></notes>
+			<footer th:replace="modelo :: footer"></footer>
 		</div>
 		<!-- End of Content Wrapper -->
 		</div>

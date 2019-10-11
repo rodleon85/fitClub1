@@ -178,7 +178,29 @@
 		</div>
 		<!-- End of Sidebar -->
     
-    
+    	<!-- Notification Div -->
+		<notes th:fragment="notes">
+			<!-- /.row -->
+
+						<div class="card-body">
+							<div >
+								<span class="alert alert-success" th:if="${sucessoMsg}" th:text="${sucessoMsg}"></span>
+							</div>
+							<div >
+								<span class="alert alert-info" th:if="${infoMsg}" th:text="${infoMsg}"></span>
+							</div>
+							<div >
+								<span class="alert alert-warning" th:if="${avisoMsg}" th:text="${avisoMsg}"></span>
+							</div>
+							<div >
+								<span class="alert alert-danger" th:if="${erroMsg}" th:text="${erroMsg}"></span>
+							</div>
+						<!-- .panel-body -->
+
+			</div>
+		</notes>
+		<!-- End of Notification Div -->
+		
 		<!-- Footer -->
 		<footer class="sticky-footer bg-white" th:fragment="footer">
 			<div class="container my-auto">

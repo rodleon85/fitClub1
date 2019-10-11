@@ -1,6 +1,7 @@
 package com.src.main.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -35,11 +36,14 @@ public class AlunoController {
 			return "adicionarAluno";
 		}
 		
+		if(alunoRepository.findAlunoByCpf(aluno.getCpf())!=null) {
+			model.addAttribute("avisoMsg", "CPF "+aluno.getCpf()+" ja cadastrado.");
+			return "adicionarAluno";
+		}
 		aluno.setDataMatricula(new Date(System.currentTimeMillis()));
-		aluno.setDataProximoPagamento(new Date(System.currentTimeMillis()));
 		
 		alunoRepository.save(aluno);
-		model.addAttribute("message", aluno.getName()+" gravado com sucesso!");
+		model.addAttribute("sucessoMsg", aluno.getName()+" gravado com sucesso!");
 		return "adicionarAluno";
 	}
 	
@@ -57,7 +61,12 @@ public class AlunoController {
 	
 	@PostMapping("/pesquisarUmAluno")
 	public String redirectPayment(@RequestParam (value = "search", required = false) String search, Model model) {
-
+		
+		List<Aluno> lista = alunoRepository.findAlunoByNameContains(search);
+		if(lista.isEmpty()) {
+			model.addAttribute("avisoMsg", "Nenhum aluno encontrado.");
+			return "pesquisarUmAluno";
+		}
 		model.addAttribute("alunos", alunoRepository.findAlunoByNameContains(search));
 		return "pesquisarAluno";
 	}

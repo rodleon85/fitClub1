@@ -26,7 +26,15 @@ public class PagamentoController {
 	@Autowired
 	private AlunoRepository alunoRepository;
 	
-	
+	@GetMapping("/resumoPagamentos/{id}")
+	public String showPayInfo(@PathVariable("id") long id, Model model) {
+		Aluno aluno = alunoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
+
+		model.addAttribute("aluno", aluno);
+		
+		return "resumoPagamentos";
+	}
 	
 	@GetMapping("/adicionarPagamento/{idAluno}")
 	public String showSignUpForm(@PathVariable("idAluno") long idAluno, Pagamento pagamento, Model model) {
@@ -42,23 +50,27 @@ public class PagamentoController {
 	public String addPagamento(@PathVariable("idAluno") long idAluno, @Valid Pagamento pagamento, 
 			BindingResult result, Model model) {
 		
-		pagamento.setDataPagamento(new Date());
-		pagamento.setIdAluno(idAluno);
+		if (result.hasErrors()) {
+			return "adicionarPagamento";
+		}
 		
 		Aluno aluno = alunoRepository.findById(idAluno)
 				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
-		model.addAttribute("aluno", aluno);
-		if(pagamento.getTipoPagamento() == "mensal") {
+		
+		pagamento.setDataPagamento(new Date());
+		pagamento.setAluno(aluno);
+		
+		
+		if(pagamento.getTipoPagamento().equals("mensal")) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(pagamento.getDataPagamento());
 			calendar.add(Calendar.MONTH, 1);
 			Date novaDataProximoPagamento = calendar.getTime();
 			aluno.setDataProximoPagamento(novaDataProximoPagamento);
-			
 		} else {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(pagamento.getDataPagamento());
-			calendar.add(Calendar.MONTH, 12);
+			calendar.add(Calendar.DATE, pagamento.getValor().intValue());
 			Date novaDataProximoPagamento = calendar.getTime();
 			aluno.setDataProximoPagamento(novaDataProximoPagamento);
 		}
@@ -67,10 +79,13 @@ public class PagamentoController {
 			return "adicionarPagamento";
 		}
 		
+		
+//		aluno.getPagamentos().add(pagamento);
+		
 		pagamentoRepository.save(pagamento);
-		alunoRepository.save(aluno);
-		model.addAttribute("message","Pagamento gravado com sucesso!");
-		return "adicionarPagamento";
+		
+		model.addAttribute("aluno", aluno);
+		return "resumoPagamentos";
 	}
 	
 	@GetMapping("/alunosInadimplentes")

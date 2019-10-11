@@ -45,7 +45,7 @@
 	                    <td th:text="${aluno.email}"></td>
 	                    <td><a th:href="@{/editarAluno/{id}(id=${aluno.id})}"><i class="fas fa-user-edit"></i></a></td>
 	                    <td><a th:href="@{/excluirAluno/{id}(id=${aluno.id})}"><i class="fas fa-user-slash"></i></a></td>
-	                    <td><a th:href="@{/adicionarPagamento/{idAluno}(idAluno=${aluno.id})}"><i class="fas fa-money-check-alt"></i></a></td>
+	                    <td><a th:href="@{/resumoPagamentos/{id}(id=${aluno.id})}"><i class="fas fa-money-check-alt"></i></a></td>
 	                    
 					</tr>
                   </tbody>
@@ -60,7 +60,7 @@
 		  <!-- End of Main Content -->
 
 
-
+			<notes th:replace="modelo :: notes"></notes>
 			<footer th:replace="modelo :: footer"></footer>
 		</div>
 		<!-- End of Content Wrapper -->

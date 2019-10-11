@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,12 +21,15 @@ public class Pagamento {
 
     private String tipoPagamento;
     
-    @DateTimeFormat(pattern = "dd-MM-YYYY")
+    @DateTimeFormat(pattern = "dd/MM/YYYY")
     private Date dataPagamento;
     
+    @Min(1)
     private BigDecimal valor;
     
-    private long idAluno;
+    @ManyToOne
+    @JoinColumn(name="aluno_id", nullable=false)
+    private Aluno aluno;
 
 	/**
 	 * @return the id
@@ -81,19 +87,14 @@ public class Pagamento {
 		this.valor = valor;
 	}
 
-	/**
-	 * @return the idAluno
-	 */
-	public long getIdAluno() {
-		return idAluno;
+	public Aluno getAluno() {
+		return aluno;
 	}
 
-	/**
-	 * @param idAluno the idAluno to set
-	 */
-	public void setIdAluno(long idAluno) {
-		this.idAluno = idAluno;
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
+	
 	   
 }
