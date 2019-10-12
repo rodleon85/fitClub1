@@ -25,7 +25,7 @@ $( document ).ready(function() {
 		});
 		
 		
-		$( ".submit" ).submit(function( event ) {
+		$( ".submit" ).click(function( event ) {
 			$('.cpf').unmask();	
 			$('.telefone').unmask();
 		});

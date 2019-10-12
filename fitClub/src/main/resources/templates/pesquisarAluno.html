@@ -39,8 +39,8 @@
 	                  	<tr th:each="aluno : ${alunos}">
 	                    <td th:text="${aluno.name}"></td>
 	                    <td th:text="${aluno.cpf}"></td>
-	                    <td th:text="${aluno.telefone}"></td>
 	                    <td th:text="${aluno.rg}"></td>
+	                    <td th:text="${aluno.telefone}"></td>
 	                    <td th:text="${aluno.endereco}"></td>
 	                    <td th:text="${aluno.email}"></td>
 	                    <td><a th:href="@{/editarAluno/{id}(id=${aluno.id})}"><i class="fas fa-user-edit"></i></a></td>
