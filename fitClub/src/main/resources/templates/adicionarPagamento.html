@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 	<head th:replace="modelo :: header"></head>
+	<script> acao = "/adicionarPagamento"</script>
 	<body>
 		<!-- Page Wrapper -->
   		<div id="wrapper">
@@ -19,20 +20,17 @@
 						<div class="form-group row">
 			            	<div class="col-sm-6">
 								<div>
-									<input type="radio" name="tipoPagamento" value="mensal" th:field="*{tipoPagamento}" id="tipoPagamento" checked="checked" />Mensalidade
-								</div>
-								<div>
-									<input type="radio" name="tipoPagamento" value="ferias" th:field="*{tipoPagamento}" id="tipoPagamento" />F&eacute;rias
+									<input type="radio" name="tipoPagamento" class="tipoPagamento" value="mensal" th:field="*{tipoPagamento}" id="tipoPagamento" checked="checked" />Mensalidade
+									<input type="radio" name="tipoPagamento" class="tipoPagamento" value="ferias" th:field="*{tipoPagamento}" id="tipoPagamento" />F&eacute;rias
 								</div>
 							</div>
-							
+			            </div>
 							<div class="form-group row">
-				            	<div class="col-sm-6">
-									<input type="number" th:field="*{valor}" id="valor" placeholder="R$ " class="form-control form-control-user">
+				            	<div class="col-sm-1">
+									<input type="number" th:field="*{valor}" id="valor" placeholder="R$ " class="valor form-control form-control-user">
 									<span th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></span>
 					            </div>
 				            </div>
-			            </div>
 			            <div class="form-group row">
 						<input type="reset" value="Limpar" class="btn btn-primary" id="reset" name="reset" />			            
 			            <div class="col-sm-1"></div>
