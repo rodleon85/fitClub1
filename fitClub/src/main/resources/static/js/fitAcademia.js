@@ -25,6 +25,11 @@ $( document ).ready(function() {
 		});
 		
 		
+		$( ".submit" ).submit(function( event ) {
+			$('.cpf').unmask();	
+			$('.telefone').unmask();
+		});
+		
 	}
 	
 	if (acao == '/adicionarPagamento'){
@@ -32,7 +37,7 @@ $( document ).ready(function() {
 		$('.valor').attr("disabled", "true");
 		
 		
-		$('.tipoPagamento').click(function() {
+		$('.tipoPagamento').change(function() {
 			if ($("input[name='tipoPagamento']:checked").val() == "mensal") {
 				$('.valor').attr("placeholder", "R$");
 				$('.valor').removeAttr("disabled");
