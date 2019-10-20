@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head th:replace="modelo :: header"></head>
+	<script> acao = "/adicionarPagamento"</script>
+	<body>
+		<!-- Page Wrapper -->
+  		<div id="wrapper">
+		<div th:replace="modelo :: sidebar"></div>
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+		
+		
+		  <!-- Main Content -->
+		  <div id="content">
+				<div class="container-fluid justify-content-center">
+					<!-- Topbar -->
+        			<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"><h1 class="h4 mb-2 text-gray-800">Alterar Pagamento ou Per&iacute;odo de F&eacute;rias</h1></nav>
+					
+					<form action="#" th:action="@{/editarPagamento/{id}(id=${pagamento.id})}" th:object="${pagamento}" method="post">
+						<div class="form-group row">
+			            	<div class="col-sm-6">
+								<div>
+									<input type="radio" name="tipoPagamento" class="tipoPagamento" value="mensal" th:field="*{tipoPagamento}" id="tipoPagamento" checked="checked" />Mensalidade
+									<input type="radio" name="tipoPagamento" class="tipoPagamento" value="ferias" th:field="*{tipoPagamento}" id="tipoPagamento" />F&eacute;rias
+								</div>
+							</div>
+			            </div>
+							<div class="form-group row">
+				            	<div class="col-sm-1">
+									<input type="number" th:field="*{valor}" id="valor" placeholder="R$ " class="valor form-control form-control-user">
+									<span th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></span>
+					            </div>
+				            </div>
+			            <div class="form-group row">
+						<a th:href="@{/resumoPagamentos/{idAluno}(idAluno=${aluno.id})}">
+							<input type="button" value="Voltar" class="btn btn-primary">
+						</a>
+			            <div class="col-sm-1"></div>
+			            <input type="submit" value="Atualizar Pagamento" class="btn btn-primary"> 
+			            </div>
+					</form>
+				</div>
+		  </div>
+		  <!-- End of Main Content -->
+
+			<notes th:replace="modelo :: notes"></notes>
+		  <footer th:replace="modelo :: footer"></footer>
+		</div>
+		<!-- End of Content Wrapper -->
+		</div>
+ 		<!-- End of Page Wrapper -->
+	</body>
+</html>
+
