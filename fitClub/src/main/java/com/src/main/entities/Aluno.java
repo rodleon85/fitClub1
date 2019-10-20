@@ -8,9 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -49,9 +53,13 @@ public class Aluno {
 	private String status;
     
 	@OneToMany(mappedBy="aluno")
+	@Cascade({CascadeType.DELETE})
     private Set<Pagamento> pagamentos; 
     
-
+	@OneToOne
+    @JoinColumn(name="usuario_id")
+    private Usuario usuario;
+	
 	//Getters e Setters
 	public long getId() {
 		return id;

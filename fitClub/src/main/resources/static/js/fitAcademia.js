@@ -25,16 +25,20 @@ $( document ).ready(function() {
 		});
 		
 		
-		$( ".submit" ).click(function( event ) {
-			$('.cpf').unmask();	
-			$('.telefone').unmask();
-		});
+//		$( ".submit" ).click(function( event ) {
+//			$('.cpf').unmask();	
+//			$('.telefone').unmask();
+//		});
 		
 	}
 	
 	if (acao == '/adicionarPagamento'){
 		$('.valor').attr("placeholder", " ");
-		$('.valor').attr("disabled", "true");
+		
+		if ($('.valor').val() == ""){
+			$('.valor').attr("disabled", "true");
+		}
+		
 		
 		
 		$('.tipoPagamento').change(function() {

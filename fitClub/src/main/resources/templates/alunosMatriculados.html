@@ -27,20 +27,15 @@
                       <th>Nome</th>
                       <th>CPF</th>
                       <th>RG</th>
-                      <th>Telefone</th>
-                      <th>Endere&ccedil;o</th>
-                      <th>E-mail</th>
+                      <th>Data de Pr&oacute;ximo Pagamento</th>
                     </tr>
                   </thead>
                   <tbody>
 	                  	<tr th:each="aluno : ${alunos}">
 	                    <td th:text="${aluno.name}"></td>
 	                    <td th:text="${aluno.cpf}"></td>
-	                    <td th:text="${aluno.telefone}"></td>
 	                    <td th:text="${aluno.rg}"></td>
-	                    <td th:text="${aluno.endereco}"></td>
-	                    <td th:text="${aluno.email}"></td>
-	                    
+	                    <td th:text="${aluno.dataProximoPagamento} ? ${#dates.format(aluno.dataProximoPagamento, 'dd/MM/yyyy')} : ${#dates.format(aluno.dataMatricula, 'dd/MM/yyyy')}"></td>
 					</tr>
                   </tbody>
                 </table>

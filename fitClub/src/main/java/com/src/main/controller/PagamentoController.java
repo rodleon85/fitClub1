@@ -1,7 +1,7 @@
 package com.src.main.controller;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -17,6 +17,7 @@ import com.src.main.entities.Aluno;
 import com.src.main.entities.Pagamento;
 import com.src.main.repository.AlunoRepository;
 import com.src.main.repository.PagamentoRepository;
+import com.src.main.service.Calculos;
 
 @Controller
 public class PagamentoController {
@@ -31,6 +32,12 @@ public class PagamentoController {
 		Aluno aluno = alunoRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
 
+		if(aluno.getDataProximoPagamento() == null
+				|| aluno.getDataProximoPagamento().compareTo(new Date()) < 0 ) {
+			aluno.setStatus("INADIMPLENTE");
+		} else {
+			aluno.setStatus("ADIMPLENTE");
+		}
 		model.addAttribute("aluno", aluno);
 		
 		return "resumoPagamentos";
@@ -50,40 +57,102 @@ public class PagamentoController {
 	public String addPagamento(@PathVariable("idAluno") long idAluno, @Valid Pagamento pagamento, 
 			BindingResult result, Model model) {
 		
+		Aluno aluno = alunoRepository.findById(idAluno)
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
+		
+		model.addAttribute("aluno", aluno);
+		
 		if (result.hasErrors()) {
+			
 			return "adicionarPagamento";
 		}
 		
-		Aluno aluno = alunoRepository.findById(idAluno)
-				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
+		if (pagamento.getTipoPagamento().equals("ferias")
+				&& aluno.getPlano().equals("mensal")) {
+
+			model.addAttribute("avisoMsg", "Aluno de Plano Mensal Não Pode Cadastrar Período de Férias.");
+
+			return "adicionarPagamento";
+		}
+		
+		if (pagamento.getValor() == null 
+				|| pagamento.getValor() <= 0.0D) {
+			
+			if(pagamento.getTipoPagamento().equals("mensal")) {
+				model.addAttribute("avisoMsg", "Valor da Mensalidade Inválido.");
+			} else {
+				model.addAttribute("avisoMsg", "Quantidade de Dias de Férias Inválido.");
+			}
+			
+			return "adicionarPagamento";
+		}
 		
 		pagamento.setDataPagamento(new Date());
 		pagamento.setAluno(aluno);
 		
 		
 		if(pagamento.getTipoPagamento().equals("mensal")) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(pagamento.getDataPagamento());
-			calendar.add(Calendar.MONTH, 1);
-			Date novaDataProximoPagamento = calendar.getTime();
-			aluno.setDataProximoPagamento(novaDataProximoPagamento);
+			Calculos.calculoPagameto(pagamento, aluno);
 		} else {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(pagamento.getDataPagamento());
-			calendar.add(Calendar.DATE, pagamento.getValor().intValue());
-			Date novaDataProximoPagamento = calendar.getTime();
-			aluno.setDataProximoPagamento(novaDataProximoPagamento);
+			
+			List<Pagamento> listFerias = pagamentoRepository.listaFeriasAno(aluno.getId());
+			if(listFerias!=null) {
+				if(Calculos.qtddPeriodosFerias(listFerias)) {
+					model.addAttribute("avisoMsg", "Quantidade de Períodos de Férias Excedido.");
+					return "adicionarPagamento";
+				}
+				
+				if(Calculos.qtddDiasFerias(listFerias, pagamento.getValor())) {
+					model.addAttribute("avisoMsg", "Quantidade de Dias de Férias Máximo Excedido.");
+					return "adicionarPagamento";
+				}
+			}
+			
+			Calculos.calculoFerias(pagamento, aluno);
 		}
-		
-		if (result.hasErrors()) {
-			return "adicionarPagamento";
-		}
-		
 		
 //		aluno.getPagamentos().add(pagamento);
 		
 		pagamentoRepository.save(pagamento);
 		
+		if(aluno.getDataProximoPagamento() == null
+				|| aluno.getDataProximoPagamento().compareTo(new Date()) < 0 ) {
+			aluno.setStatus("INADIMPLENTE");
+		} else {
+			aluno.setStatus("ADIMPLENTE");
+		}
+		
+		model.addAttribute("aluno", aluno);
+		return "resumoPagamentos";
+	}
+	
+	@GetMapping("/editarPagamento/{id}")
+	public String showEditPayForm(@PathVariable("id") long id, Model model) {
+		Pagamento pagamento = pagamentoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Pagamento Não Encontrado"));
+		Aluno aluno = alunoRepository.findById(pagamento.getAluno().getId())
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
+		
+		model.addAttribute("pagamento", pagamento);
+		model.addAttribute("aluno", aluno);
+		
+		return "editarPagamento";
+	}
+	
+	@PostMapping("/editarPagamento/{id}")
+	public String updateUser(@PathVariable("id") long id, @Valid Pagamento pagamento, 
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "editarPagamento";
+		}
+		Pagamento pagamentoBd = pagamentoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Pagamento Não Encontrado"));
+		
+		pagamentoBd.setValor(pagamento.getValor());
+		
+		pagamentoRepository.save(pagamentoBd);
+		Aluno aluno = alunoRepository.findById(pagamentoBd.getAluno().getId())
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
 		model.addAttribute("aluno", aluno);
 		return "resumoPagamentos";
 	}

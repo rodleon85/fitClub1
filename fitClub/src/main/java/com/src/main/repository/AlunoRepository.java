@@ -11,7 +11,9 @@ import com.src.main.entities.Aluno;
 // CRUD refers Create, Read, Update, Delete
 
 public interface AlunoRepository extends CrudRepository<Aluno, Long>, AlunoRepositoryCustom {
-    @Query(value = "select id, name, cpf, telefone, rg, endereco, email, plano, data_matricula, data_proximo_pagamento, 'INADIMPLENTE' as 'status' from aluno where data_proximo_pagamento < CURDATE();"
+    @Query(value = "select id, name, cpf, telefone, rg, endereco, email, plano, data_matricula, data_proximo_pagamento, "
+    		+ "'INADIMPLENTE' as 'status' from aluno where data_proximo_pagamento < CURDATE() "
+    		+ "or data_proximo_pagamento is null"
     		,nativeQuery = true)
 	List<Aluno> findListaInadimplentes();
 }

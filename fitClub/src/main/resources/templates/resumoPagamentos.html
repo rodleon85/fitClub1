@@ -19,10 +19,11 @@
 						class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
 						<h1 class="h4 mb-2 text-gray-800">
 							Informa&ccedil;&otilde;es de Pagamento de
-							<th th:text="${aluno.name}">
+							<th th:text="${aluno.name}"> 
 						</h1>
+						
 					</nav>
-
+					<div class="form-group row">Situa&ccedil;&atilde;o: <th class="danger" th:text="${aluno.status}"></div>
 					<div class="form-group row">
 						Plano: 
 						<div class="col-sm-6" th:text="${aluno.plano}"></div>
@@ -40,6 +41,7 @@
 					        <th >Tipo</th>
 					        <th >Valor</th>
 					        <th >Dias</th>
+					        <th ></th>
 					      </tr>
 					    </thead>
 					    <tbody>
@@ -48,6 +50,7 @@
 					        <td th:text="${pagamento.tipoPagamento} == 'mensal' ? 'Pagamento de Mensalidade' : 'Inclus&atilde;o de F&eacute;rias'"></td>
 					        <td th:text="${pagamento.tipoPagamento} == 'mensal' ? ${pagamento.valor} : ''"></td>
 					        <td th:text="${pagamento.tipoPagamento} == 'ferias' ? ${pagamento.valor.intValue()} : ''"></td>
+					        <td><a th:href="@{/editarPagamento/{id}(id=${pagamento.id})}"><i class="fas fa-edit"></i></a></td>
 					      </tr>
 					    </tbody>
 					  </table>

@@ -95,8 +95,19 @@ public class AlunoController {
 			aluno.setId(id);
 			return "alterarAluno";
 		}
+		
+		Aluno alunoOri = alunoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Aluno Não Encontrado"));
 
-		alunoRepository.save(aluno);
+		alunoOri.setName(aluno.getName());
+		alunoOri.setCpf(aluno.getCpf());
+		alunoOri.setTelefone(aluno.getTelefone());
+		alunoOri.setRg(aluno.getRg());
+		alunoOri.setEndereco(aluno.getEndereco());
+		alunoOri.setEmail(aluno.getEmail());
+		alunoOri.setPlano(aluno.getPlano());
+		
+		alunoRepository.save(alunoOri);
 		model.addAttribute("alunos", alunoRepository.findAll());
 		return "pesquisarAluno";
 	}

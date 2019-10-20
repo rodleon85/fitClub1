@@ -1,6 +1,5 @@
 package com.src.main.entities;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,13 +19,14 @@ public class Pagamento {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
+    @NotBlank(message = "Selecionar tipo de registro.")
     private String tipoPagamento;
     
     @DateTimeFormat(pattern = "dd/MM/YYYY")
     private Date dataPagamento;
     
     @Min(1)
-    private BigDecimal valor;
+    private Double valor;
     
     @ManyToOne
     @JoinColumn(name="aluno_id", nullable=false)
@@ -76,14 +77,14 @@ public class Pagamento {
 	/**
 	 * @return the valor
 	 */
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
 	/**
 	 * @param valor the valor to set
 	 */
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

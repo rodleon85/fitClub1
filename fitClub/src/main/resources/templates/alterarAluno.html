@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 	<head th:replace="modelo :: header"></head>
+	<script>acao = "/adicionarAluno"</script>
 	<body>
 		<!-- Page Wrapper -->
   		<div id="wrapper">
@@ -24,13 +25,13 @@
 			            </div>
 			            <div class="form-group row">
 			            	<div class="col-sm-6">
-								<input type="text" th:field="*{cpf}" id="cpf" placeholder="CPF" class="form-control form-control-user">
+								<input type="text" th:field="*{cpf}" id="cpf" placeholder="CPF" class="cpf form-control form-control-user">
 								<span class="alert-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
 				            </div>
 			            </div>
 			            <div class="form-group row">
 			            	<div class="col-sm-6">
-								<input type="text" th:field="*{telefone}" id="telefone" placeholder="Telefone" class="form-control form-control-user">
+								<input type="text" th:field="*{telefone}" id="telefone" placeholder="Telefone" class="telefone form-control form-control-user">
 								<!-- <span th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span> -->
 				            </div>
 			            </div>
